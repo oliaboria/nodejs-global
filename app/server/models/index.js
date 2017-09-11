@@ -1,7 +1,2 @@
-import User from './user';
-import Product from './product';
-
-export {
-    User,
-    Product
-}
+export * from './user';
+export * from './product';
