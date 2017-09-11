@@ -1,5 +1,7 @@
-const user = require('./user');
-const product = require('./product');
+import User from './user';
+import Product from './product';
 
-module.exports.User = user;
-module.exports.Product = product;
+export {
+    User,
+    Product
+}

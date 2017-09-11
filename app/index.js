@@ -1,7 +1,7 @@
-const config = require('./server/config/config');
-const models = require('./server/models');
+import config from './server/config/config';
+import { Product , User } from './server/models';
 
 console.log(config.productName);
 
-let user = new models.User('Olga');
-let product = new models.Product();
+let user = new User('Olga');
+let product = new Product();
