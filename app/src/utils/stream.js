@@ -12,11 +12,23 @@ function inputOutput(filePath) {
       .pipe(process.stdout);
 }
 
+function transformToUppercase() {
+    return process.stdin
+        .pipe(toUpperCase())
+        .pipe(process.stdout);
+}
+
 function transformFile(filePath) {
     fs.createReadStream(filePath)
         .pipe(fs.createWriteStream(filePath.replace('.csv', '.json')))
 }
 
+function toUpperCase(){
+    return throught2((chunk, enc, callback) => {
+        console.log(chunk.toString().toUpperCase())
+        callback();
+    });
+}
 
 const argv = yargs
     .options({
@@ -36,6 +48,12 @@ const argv = yargs
             },
         },
         (argv) => inputOutput(argv.file)
+    )
+    .command(
+        'transform',
+        'Parse CSV input as JSON',
+        {},
+        () => transformToUppercase()
     )
     .command(
        'transform-file',
