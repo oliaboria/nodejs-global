@@ -6,6 +6,7 @@ const path = require('path');
 const throught2 = require('through2');
 const { promisify } = require('util');
 const request = require('request');
+const {parseCsvToJson} = require('../common/helpers/helpers');
 
 function inputOutput(filePath) {
     fs.createReadStream(filePath)
@@ -20,13 +21,20 @@ function transformToUppercase() {
 
 function transformFile(filePath) {
     fs.createReadStream(filePath)
+        .pipe(convertCsvToJson())
         .pipe(fs.createWriteStream(filePath.replace('.csv', '.json')))
 }
 
-function toUpperCase(){
+function toUpperCase() {
     return throught2((chunk, enc, callback) => {
-        console.log(chunk.toString().toUpperCase())
-        callback();
+        callback(null, chunk.toString().toUpperCase());
+    });
+}
+
+function convertCsvToJson() {
+    return throught2((chunk, enc, callback) => {
+        const dataJson = parseCsvToJson(chunk.toString());
+        callback(null, JSON.stringify(dataJson, null, ' '));
     });
 }
 
@@ -51,7 +59,7 @@ const argv = yargs
     )
     .command(
         'transform',
-        'Parse CSV input as JSON',
+        'transform import to upper case',
         {},
         () => transformToUppercase()
     )
