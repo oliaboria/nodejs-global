@@ -19,10 +19,16 @@ function transformToUppercase() {
         .pipe(process.stdout);
 }
 
-function transformFile(filePath) {
+function parseFile(filePath) {
     fs.createReadStream(filePath)
         .pipe(convertCsvToJson())
-        .pipe(fs.createWriteStream(filePath.replace('.csv', '.json')))
+        .pipe(fs.createWriteStream(filePath.replace('.csv', '.json')));
+}
+
+function parse(filePath) {
+    fs.createReadStream(filePath)
+        .pipe(convertCsvToJson())
+        .pipe(process.stdout);
 }
 
 function toUpperCase() {
@@ -64,7 +70,7 @@ const argv = yargs
         () => transformToUppercase()
     )
     .command(
-       'transform-file',
+       'parse-file',
         'Parse CSV file as JSON',
         {
             file: {
@@ -74,14 +80,22 @@ const argv = yargs
                 demandOption: true,
             }
         },
-        (argv) => transformFile(argv.file)
+        (argv) => parseFile(argv.file)
     )
+    .command(
+        'parse',
+         'Parse CSV file as JSON',
+         {
+             file: {
+                 alias: 'f',
+                 describe: 'path to the file',
+                 normalize: true,
+                 demandOption: true,
+             }
+         },
+         (argv) => parse(argv.file)
+     )
     .demandCommand(1, 'You need at least one command before moving on')
     .locale('en')
     .version(false)
     .argv;
-
-module.exports = {
-    inputOutput,
-    transformFile
-}
