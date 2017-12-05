@@ -1,7 +1,7 @@
 export default function cookieParser (req, res, next) {
     const cookie = req.headers.cookie;
     
-    if(cookie) {
+    if (cookie) {
         const cookiesArray = cookie.replace(/\s/g, '').split(';');
 
         req.parsedCookies = cookiesArray.reduce((prev, curr) => {
