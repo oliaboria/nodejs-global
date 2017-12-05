@@ -1,0 +1,25 @@
+{
+    "users": [
+        {
+            "id": "5416",
+            "name": "James",
+            "surname": "Bond",
+            "email": "james.bond@gmail.com",
+            "password": "iamstar"
+        },
+        {
+            "id": "1081",
+            "name": "Tom",
+            "surname": "Shelby",
+            "email": "tom.shelby@gmail.com",
+            "password": "password"
+        },
+        {
+            "id": "3708",
+            "name": "Tony",
+            "surname": "Stark",
+            "email": "tony.stark@gmail.com",
+            "password": "11111"
+        }
+    ]
+}

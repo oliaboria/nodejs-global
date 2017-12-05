@@ -1,0 +1,25 @@
+{
+    "products": [
+        {
+            "id": "8282",
+            "name": "Supreme T-Shirt",
+            "brand": "Supreme",
+            "price": 99.99,
+            "reviews": 5362
+        },
+        {
+            "id": "7131",
+            "name": "Zara T-Shirt",
+            "brand": "Zara",
+            "price": 79.99,
+            "reviews": 8392
+        },
+        {
+            "id": "2728",
+            "name": "X-men T-Shirt",
+            "brand": "DC",
+            "price": 199.99,
+            "reviews": 3829
+        }
+    ]
+}

@@ -1,26 +1,20 @@
-import config from '../config/config';
-import { events } from './common/constants';
-import { Product, User } from './models';
-import { DirWatcher, Importer } from './modules';
+import express from 'express';
 
-console.log(config.productName);
+import usersRouter from '../src/routers/users';
 
-let user = new User('Olga');
-let product = new Product();
-let dirWatcher = new DirWatcher();
+const app = express();
+const router = express.Router();
 
-dirWatcher.watchFile(`${__dirname}/data`, 2000);
+const port = process.env.PORT || 8080; 
 
-const importer = new Importer();
-
-dirWatcher.on(events.DIR_WATCHER_CHANGED, () => {
-    const data = importer.importSync(`${__dirname}/data`);
-  
-    console.log('sync', data);
+app.listen(port, () => {
+    console.log(`Server listen on 8080 port.`);
 });
-  
-dirWatcher.on(events.DIR_WATCHER_CHANGED, async () => {
-    const data = await importer.import(`${__dirname}/data`);
-  
-    console.log('acync', data);
+
+app.use('/api', router);
+
+router.get('/', function(req, res) {
+    res.json({ message: 'hooray! welcome to our api!' });   
 });
+
+router.use('/users', usersRouter);
