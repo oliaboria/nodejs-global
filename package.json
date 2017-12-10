@@ -6,7 +6,8 @@
   "scripts": {
     "babel-node": "babel-node",
     "start": "nodemon --exec npm run babel-node -- ./app/src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "http-servers": "nodemon --exec npm run babel-node -- ./app/src/http-servers/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "util.promisify": "^1.0.0"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "request": "^2.83.0",
     "through2": "^2.0.3",
     "yargs": "^10.0.3"
