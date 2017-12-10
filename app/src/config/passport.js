@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
 
-import users from '../models/users';
+import authHelper from '../common/helpers/authHelper';
 
 passport.use(new Strategy(
     {
@@ -9,7 +9,7 @@ passport.use(new Strategy(
       passwordField: 'password'
     },
     ((username, password, done) => {
-        const user = users.find(user => user.email === username && user.password === password);
+        const user = authHelper.isAuthorized(username, password);
 
         if (user) {
             done(null, user);

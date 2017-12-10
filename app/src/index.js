@@ -34,6 +34,6 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
-router.use('/auth-passport', authRouter);
+router.use('/auth', authRouter);
 router.use('/products', productsRouter);
 router.use('/users', usersRouter);
