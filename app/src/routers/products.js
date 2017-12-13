@@ -1,8 +1,11 @@
 import express from 'express';
 
+import jwt from '../middlewares/jwt';
 import products from '../models/products';
 
 const router = express.Router();
+
+router.use(jwt);
 
 function getProductById(id) {
     let product = products.find((product) => {
