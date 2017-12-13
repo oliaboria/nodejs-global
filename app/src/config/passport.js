@@ -11,10 +11,14 @@ passport.use(new Strategy(
     ((username, password, done) => {
         const user = authHelper.isAuthorized(username, password);
 
-        if (user) {
-            done(null, user);
-        } else {
-            done(null, false, { message: 'Not Found' });
-        }
+        return authHelper.isAuthorized(username, password)
+            .then((user) => {
+                if (user) {
+                    return done(null, user);
+                } else {
+                    return done(null, false, { message: 'Not Found' });
+                }
+            })
+            .catch((error) => done(null, false, { message: 'Not Found' }));
     })
 ));
