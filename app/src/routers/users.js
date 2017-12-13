@@ -1,7 +1,7 @@
 import express from 'express';
 
 import jwt from '../middlewares/jwt';
-import users from '../models/users';
+const users = [];
 
 const router = express.Router();
 
