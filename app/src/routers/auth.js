@@ -10,27 +10,29 @@ const router = express.Router();
 router.post(
     '/jwt', 
     (req, res) => {
-        let resp = null;
-        const user = authHelper.isAuthorized(req.body.email, req.body.password);
+        authHelper.isAuthorized(req.body.email, req.body.password)
+            .then((user) => {
+                let resp = null;
 
-        if (user) {
-            const token = jwt.sign(JSON.stringify(user), secret.key);
+                if (user) {
+                    const token = jwt.sign(JSON.stringify(user), secret.key);
+        
+                    resp = {
+                        code: 200,
+                        message: 'OK',
+                        data: user,
+                        token: token
+                    };
+                } else {
+                    resp = {
+                        code: 404,
+                        message: 'Not Found'
+                    }
+                }
 
-            resp = {
-                code: 200,
-                message: 'OK',
-                data: user,
-                token: token
-            };
-        } else {
-            resp = {
-                code: 404,
-                message: 'Not Found'
-            }
-        }
-
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify(resp, null, ' '));
+                res.status(resp.code).send(resp)
+            })
+            .catch(error => res.status(400).send(error));
 });
 
 router.post(

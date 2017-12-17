@@ -1,7 +1,11 @@
-import users from '../../models/users';
+import { User } from '../../models/models';
 
 function isAuthorized(email, password) {
-    return users.find(user => user.email === email && user.password === password);
+    return User
+        .all()
+        .then((users) => {
+            return users.find(user => user.email === email && user.password === password);
+        });
 }
 
 export default {

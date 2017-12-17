@@ -1,56 +1,61 @@
 import express from 'express';
 
 import jwt from '../middlewares/jwt';
-import products from '../models/products';
+import { Product } from '../models/models';
 
 const router = express.Router();
 
 router.use(jwt);
 
-function getProductById(id) {
-    let product = products.find((product) => {
-        return product.id === id;
-    });
-
-    return product ? product : {};
-}
-
 router.get('/', (req, res) => {
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(products, null, ' '));
+    Product
+        .all()
+        .then((products) => res.status(200).send(products))
+        .catch((error) => res.status(400).send(error));
 });
 
 router.get('/:id', (req, res) => {
     const id = req.params.id;
 
-    const product = getProductById(id);
+    Product
+        .findById(id)
+        .then((product) => {
+            if (!product) {
+                res.status(404).send({message: 'No such product'});
+            }
 
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(product, null, ' '));
+            res.status(200).send(product);
+        })
+        .catch((error) => res.status(400).send(error));
 });
 
 router.get('/:id/reviews', (req, res) => {
     const id = req.params.id;
 
-    const product = getProductById(id);
-    const reviews = product.reviews ? product.reviews : '';
+    Product
+        .findById(id)
+        .then((product) => {
+            if (!product) {
+                res.status(404).send({message: 'No reviews for this product'});
+            }
 
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end(reviews.toString());
+            res.status(200).send(JSON.stringify(product.reviews));
+        })
+        .catch((error) => res.status(400).send(error));
+
 });
 
 router.post('/', (req, res) => {
     const product = {
-        "id": req.body.id,
         "name": req.body.name,
         "brand": req.body.brand,
         "price": req.body.price,
         "reviews": req.body,reviews
     };
     
-    products.push(product);
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(product, null, ' '));
+    Product.create(product)
+        .then(product => res.status(201).send(product))
+        .catch(error => res.status(400).send(error));
 });
   
 export default router;
