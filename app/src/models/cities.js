@@ -6,7 +6,10 @@ import { Schema } from 'mongoose';
          type: String
      },
      country: String,
-     capital: Boolean,
+     capital: {
+         type: Boolean,
+         required: true
+     },
      location: {
          lat: Number,
          long: Number
