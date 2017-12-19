@@ -23,6 +23,7 @@ router.post('/', function(req, res) {
     city.country = req.body.country;
     city.capital = req.body.capital;
     city.location = req.body.location;
+    city.lastModifiedDate = new Date(); 
 
     city.save(function(err) {
         if (err) {
@@ -46,12 +47,8 @@ router.put('/:id', function(req, res) {
         city.name = req.params.name;
         city.country = req.params.country;
         city.capital = req.params.capital;
-        city.location = req.params.location; 
-
-        // city.name = 'Brest';
-        // city.country = "Belarus";
-        // city.capital = false;
-        // city.location = {lat:52.097621,long: 23.734050}; 
+        city.location = req.params.location;
+        city.lastModifiedDate = new Date();
           
         city.save((err) => {
             if (err) {

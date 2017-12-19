@@ -10,7 +10,8 @@ import { Schema } from 'mongoose';
      location: {
          lat: Number,
          long: Number
-     }
+     },
+     lastModifiedDate: Date
  });
  
  export default mongoose.model('City', CitySchema);
