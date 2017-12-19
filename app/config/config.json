@@ -1,3 +1,4 @@
 {
-    "productName": "NodeMP HW App"
+    "productName": "NodeMP HW App",
+    "mongoUrl": "mongodb://localhost:27017/db"
 }

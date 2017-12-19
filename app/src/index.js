@@ -1,15 +1,21 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+import mongoose from 'mongoose';
 import passport from 'passport';
+
+import config from '../config/config';
 
 import cookieParser from '../src/middlewares/cookieParser';
 import queryParser from '../src/middlewares/queryParser';
 
 import authRouter from '../src/routers/auth';
+import citiesRouter from '../src/routers/cities';
 import productsRouter from '../src/routers/products';
 import usersRouter from '../src/routers/users';
 
 import '../src/config/passport';
+
+mongoose.connect(config.mongoUrl);
 
 const app = express();
 const router = express.Router();
@@ -35,5 +41,6 @@ router.get('/', function(req, res) {
 });
 
 router.use('/auth', authRouter);
+router.use('/cities', citiesRouter);
 router.use('/products', productsRouter);
 router.use('/users', usersRouter);
