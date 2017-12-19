@@ -1,7 +1,13 @@
-import users from '../../models/users';
+import User from '../models/user';
 
 function isAuthorized(email, password) {
-    return users.find(user => user.email === email && user.password === password);
+    return User.find({ email: email, password: password }, function(user) {
+        if (err) {
+            return false;
+        }
+
+        return !!user;
+    });
 }
 
 export default {
