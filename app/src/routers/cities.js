@@ -60,12 +60,12 @@ router.put('/:id', function(req, res) {
 });
 
 router.delete('/:id', function(req, res) {
-    City.findByIdAndRemove(req.params.id, function(err, cities) {
+    City.findByIdAndRemove(req.params.id, function(err, city) {
         if (err) {
             res.send(err);
         }
 
-        res.json(cities);
+        res.json(city);
     });
 });
 
