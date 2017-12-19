@@ -53,5 +53,15 @@ router.post('/', (req, res) => {
         res.json(product);
     });
 });
+
+router.delete('/:id', function(req, res) {
+    Product.findByIdAndRemove(req.params.id, function(err, product) {
+        if (err) {
+            res.send(err);
+        }
+
+        res.json(product);
+    });
+});
   
 export default router;
