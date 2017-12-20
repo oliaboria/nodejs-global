@@ -1,0 +1,337 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a simple API"
+  version: "1.0.0"
+  title: "Simple Inventory API"
+  contact:
+    email: "you@your-company.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "virtserver.swaggerhub.com"
+basePath: "/lala8/cityInfo/1.0.0"
+tags:
+- name: "admins"
+  description: "Secured Admin-only calls"
+- name: "users"
+  description: "Operations available to regular users"
+schemes:
+- "https"
+paths:
+  /products:
+    get:
+      tags:
+      - "users"
+      summary: "return products"
+      description: "Return all vailable products\n"
+      operationId: "getProducts"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "products"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+    post:
+      tags:
+      - "admins"
+      summary: "adds a product"
+      description: "Adds a product to the system"
+      operationId: "addProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "product"
+        description: "Product item to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        201:
+          description: "item created"
+        400:
+          description: "invalid input, object invalid"
+  /products/{id}:
+    get:
+      tags:
+      - "users"
+      summary: "return product by id"
+      description: "Return product by id\n"
+      operationId: "getProductsByid"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "pass an id of product"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Return product with provided id"
+          schema:
+            type: "object"
+            properties: {}
+        404:
+          description: "Not found"
+    delete:
+      tags:
+      - "users"
+      summary: "remove product by id"
+      description: "Remove product by id\n"
+      operationId: "removeProductsByid"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "pass an id of product"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Return removed product"
+          schema:
+            type: "object"
+            properties: {}
+        404:
+          description: "Not found"
+  /products/{id}/reviews:
+    get:
+      tags:
+      - "users"
+      summary: "return reviews of a product by id"
+      description: "Return reviews of a product\n"
+      operationId: "getReviewsOfProduct"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "pass an id of product"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Return reviews of a product with provided id"
+          schema:
+            type: "number"
+        404:
+          description: "Not found"
+  /cities:
+    get:
+      tags:
+      - "users"
+      summary: "return cities"
+      description: "Return all vailable cities\n"
+      operationId: "getCities"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "cities"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/City"
+    post:
+      tags:
+      - "admins"
+      summary: "adds a city"
+      description: "Adds a city to the system"
+      operationId: "addCity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "city"
+        description: "City item to add"
+        required: false
+        schema:
+          $ref: "#/definitions/City"
+      responses:
+        201:
+          description: "item created"
+        400:
+          description: "invalid input, object invalid"
+  /cities/{id}:
+    put:
+      tags:
+      - "admins"
+      summary: "modify a city or create new one"
+      description: "Modify a city in the system"
+      operationId: "modifyCity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "pass an id of city"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "city"
+        description: "City item to add"
+        required: false
+        schema:
+          $ref: "#/definitions/City"
+      responses:
+        201:
+          description: "item modified or created"
+        400:
+          description: "invalid input, object invalid"
+    delete:
+      tags:
+      - "users"
+      summary: "remove city by id"
+      description: "Remove city by id\n"
+      operationId: "removeCitybyId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "pass an id of city"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Return removed city"
+          schema:
+            type: "object"
+            properties: {}
+        404:
+          description: "Not found"
+  /users:
+    get:
+      tags:
+      - "users"
+      summary: "return users"
+      description: "Return all users\n"
+      operationId: "getUsers"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "users"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+  /users/{id}:
+    delete:
+      tags:
+      - "users"
+      summary: "remove user by id"
+      description: "Remove user by id\n"
+      operationId: "removeUserbyId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "pass an id of user"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Return removed user"
+          schema:
+            type: "object"
+            properties: {}
+        404:
+          description: "Not found"
+definitions:
+  Product:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Supreme T-Shirt"
+      brand:
+        type: "string"
+        example: "Supreme"
+      price:
+        type: "number"
+        example: 78
+      reviews:
+        type: "number"
+        example: 8347
+      lastModifiedDate:
+        type: "string"
+        format: "int32"
+        example: "2016-08-29T09:12:33.001Z"
+    example:
+      reviews: 8347
+      lastModifiedDate: "2016-08-29T09:12:33.001Z"
+      price: 78
+      name: "Supreme T-Shirt"
+      brand: "Supreme"
+  City:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Brest"
+      country:
+        type: "string"
+        example: "Belarus"
+      capital:
+        type: "boolean"
+        example: false
+      location:
+        type: "object"
+        example:
+          lat: 787
+          long: 8989
+        properties: {}
+      lastModifiedDate:
+        type: "string"
+        format: "int32"
+        example: "2016-08-29T09:12:33.001Z"
+    example:
+      country: "Belarus"
+      capital: false
+      lastModifiedDate: "2016-08-29T09:12:33.001Z"
+      name: "Brest"
+      location:
+        lat: 787
+        long: 8989
+  User:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "James"
+      surname:
+        type: "string"
+        example: "Bond"
+      email:
+        type: "string"
+        example: "tom.shelby@gmail.com"
+      password:
+        type: "string"
+        example: "password"
+      lastModifiedDate:
+        type: "string"
+        format: "int32"
+        example: "2016-08-29T09:12:33.001Z"
+    example:
+      password: "password"
+      lastModifiedDate: "2016-08-29T09:12:33.001Z"
+      surname: "Bond"
+      name: "James"
+      email: "tom.shelby@gmail.com"
